@@ -34,6 +34,7 @@ const fetchLogs = async () => {
             if (text !== lastLogs) {
                 const newLogs = getNewLogs(lastLogs, text);
                 if (newLogs) {
+                    console.log("-------------------------------- NEW LOGS FOUND --------------------------------");
                     console.log(newLogs);
                     playSound(); // Play a sound when new logs are detected
                 }
