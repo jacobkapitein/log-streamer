@@ -2,12 +2,20 @@ import { exec } from 'child_process';
 
 const isWindows = process.platform === 'win32';
 
+const args = process.argv.slice(2);
+const urlArg = args.find(arg => arg.startsWith('--url='));
+if (!urlArg) {
+    console.error('Error: Missing --url argument');
+    process.exit(1);
+}
+const streamerUrl = urlArg.split('=')[1];
+
 const fetchLogs = async () => {
     let lastLogs = ""; // Keep track of the previous logs
 
     while (true) {
         try {
-            const response = await fetch(process.env.STREAMER_URL!, {
+            const response = await fetch(streamerUrl, {
                 method: 'GET',
                 headers: {
                     cookie: process.env.STREAMER_COOKIE!,
@@ -53,7 +61,7 @@ const getNewLogs = (oldLogs: string, newLogs: string): string => {
 
 const playSound = () => {
     if (!isWindows) return;
-    
+
     exec('powershell -c (New-Object Media.SoundPlayer "C:\\Windows\\Media\\notify.wav").PlaySync();', (err) => {
         if (err) {
             console.error('Error playing sound:', err);

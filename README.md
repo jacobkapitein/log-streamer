@@ -7,4 +7,4 @@ This tool is definitly not be fit for all log streaming purposes. Feel free to c
 ## How to use
 
 1. Copy `.env.example` to `.env` and fill in the blanks.
-2. Run `npm start`
+2. Run `npm start -- --url=<some-url-here>`
